@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>String Encoder Web App</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<h1>String Encoder Web App</h1>
+	<label for="input">Enter a string:</label><br>
+	<textarea id="input" rows="2" cols="40"></textarea><br><br>
+	<button onclick="encode()">Encode</button><br><br>
+	<p id="output"></p>
+	<script>
+		function encode() {
+			// Get the input string and split it into words
+			var input = document.getElementById("input").value;
+			var words = input.split(" ");
+			// Initialize the output string
+			var output = "";
+			// Loop through each word
+			for (var i = 0; i < words.length; i++) {
+				// Loop through each letter in the word
+				for (var j = 0; j < words[i].length; j++) {
+					// Get the code for the current letter
+					var code = getCode(words[i].charAt(j));
+					// If the code is valid, add it to the output string
+					if (code !== "") {
+						output += code + ",";
+					}
+				}
+				// Add a hyphen to separate the codes for different words
+				output = output.slice(0, -1) + "-";
+			}
+			// Remove the last hyphen from the output string
+			output = output.slice(0, -1);
+			// Display the output string
+			document.getElementById("output").innerHTML = output;
+		}
+
+		function getCode(letter) {
+			// Get the index of the word containing the letter
+			var wordIndex = 0;
+			var letterIndex = 0;
+			var words = "the quick brown fox jumps over the lazy dog".split(" ");
+			for (var i = 0; i < words.length; i++) {
+				if (words[i].indexOf(letter) !== -1) {
+					wordIndex = i ;
+					letterIndex = words[i].indexOf(letter) ;
+					break;
+				}
+			}
+			// If the letter is not found, return an empty string
+			if (wordIndex === -1 || letterIndex === -1) {
+				return "";
+			}
+			// Otherwise, return the code for the letter
+			return wordIndex.toString() + letterIndex.toString();
+		}
+	</script>
+</body>
+</html>
